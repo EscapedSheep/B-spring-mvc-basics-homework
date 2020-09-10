@@ -44,6 +44,10 @@ public class UserRepository {
         return userList;
     }
 
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
+    }
+
     private int idGenerator() {
         return idCount.incrementAndGet();
     }
