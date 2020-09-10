@@ -8,10 +8,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidatingException(MethodArgumentNotValidException exception) {
         String message = exception.getBindingResult().getFieldError().getDefaultMessage();
         ErrorResponse errorResponse = new ErrorResponse(message);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler(UserNameAlreadyExistedException.class)
+    public ResponseEntity<ErrorResponse> handleUserNameExistedException(UserNameAlreadyExistedException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
+        return ResponseEntity.badRequest().body(errorResponse);
     }
 }
