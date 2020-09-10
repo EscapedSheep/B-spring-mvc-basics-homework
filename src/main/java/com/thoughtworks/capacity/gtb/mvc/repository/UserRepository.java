@@ -19,9 +19,10 @@ public class UserRepository {
         this.idCount = new AtomicInteger(0);
     }
 
-    public void addUser(User user) {
+    public User addUser(User user) {
         user.setId(idGenerator());
         userList.add(user);
+        return user;
     }
 
     public Boolean isUserNameExisted(String name) {

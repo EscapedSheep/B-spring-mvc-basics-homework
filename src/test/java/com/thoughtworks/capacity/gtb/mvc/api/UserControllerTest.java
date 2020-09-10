@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.hamcrest.Matchers.*;
@@ -83,5 +84,32 @@ class UserControllerTest {
         mockMvc.perform(post("/register").contentType(MediaType.APPLICATION_JSON).content(userJson))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code", is(HttpStatus.BAD_REQUEST.value())));
+    }
+
+    @Test
+    void should_login_given_correct_name_and_password() throws Exception{
+        User user = new User();
+        user.setName("userName");
+        user.setPassword("password");
+        user.setEmail("a@b.com");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String userJson = objectMapper.writeValueAsString(user);
+        user = userRepository.addUser(user);
+
+        mockMvc.perform(get("/login").param("username", user.getName()).param("password",  user.getPassword()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.username", is(user.getName())))
+                .andExpect(jsonPath("$.password", is(user.getPassword())))
+                .andExpect(jsonPath("$.id", is(user.getId())))
+                .andExpect(jsonPath("$.email", is(user.getEmail())));
+    }
+
+    @Test
+    void should_receive_error_when_login_given_name_or_password_invalid() throws Exception{
+        mockMvc.perform(get("/login").param("username", "").param("password","12345"))
+                .andExpect(status().isBadRequest());
+
+        mockMvc.perform(get("/login").param("username", "tom").param("password","1234"))
+                .andExpect(status().isBadRequest());
     }
 }
