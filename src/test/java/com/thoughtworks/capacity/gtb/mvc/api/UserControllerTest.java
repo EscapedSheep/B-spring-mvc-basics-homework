@@ -8,12 +8,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -39,4 +42,25 @@ class UserControllerTest {
         assertEquals(userRepository.getUserList().get(0).getName(),  user.getName());
         assertEquals(userRepository.getUserList().get(0).getPassword(), user.getPassword());
     }
+
+    @Test
+    void should_receive_error_given_invalid_name_or_password() throws Exception{
+        ObjectMapper objectMapper = new ObjectMapper();
+        User user = new User();
+        user.setName("");
+        user.setPassword("password");
+        String userJson = objectMapper.writeValueAsString(user);
+
+        mockMvc.perform(post("/register").contentType(MediaType.APPLICATION_JSON).content(userJson))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code", is(HttpStatus.BAD_REQUEST.value())));
+
+        user.setName("tom");
+        user.setPassword("");
+        userJson = objectMapper.writeValueAsString(user);
+        mockMvc.perform(post("/register").contentType(MediaType.APPLICATION_JSON).content(userJson))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code", is(HttpStatus.BAD_REQUEST.value())));
+    }
+
 }

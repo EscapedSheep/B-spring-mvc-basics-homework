@@ -1,20 +1,20 @@
 package com.thoughtworks.capacity.gtb.mvc.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class User {
     private Integer id;
 
-    @NotNull(message = "用户名不为空")
+    @NotBlank(message = "用户名不为空")
     @Size(min = 3, max = 10, message = "用户名不合法")
     private String name;
 
-    @NotNull(message = "密码是不为空")
+    @NotBlank(message = "密码是不为空")
     @Size(min = 5, max = 12, message = "密码不合法")
     private String password;
 
