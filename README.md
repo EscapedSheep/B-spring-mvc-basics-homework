@@ -1,4 +1,4 @@
-# Spring MVC Basics Homework
+Spring MVC Basics Homework
 
 ## 作业描述
 
