@@ -16,8 +16,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
-    @ExceptionHandler(UserNameAlreadyExistedException.class)
-    public ResponseEntity<ErrorResponse> handleUserNameExistedException(UserNameAlreadyExistedException exception) {
+    @ExceptionHandler({UserNameAlreadyExistedException.class, UserNameOrPasswordNotValidException.class})
+    public ResponseEntity<ErrorResponse> handleUserNameExistedException(Exception exception) {
         ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
         return ResponseEntity.badRequest().body(errorResponse);
     }

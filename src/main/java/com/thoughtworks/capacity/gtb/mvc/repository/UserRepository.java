@@ -24,8 +24,16 @@ public class UserRepository {
         userList.add(user);
     }
 
-    public Optional<User> findUser(String name) {
+    public Boolean isUserNameExisted(String name) {
         List<User> findUser = userList.stream().filter(user -> user.getName().equals(name)).collect(Collectors.toList());
+        if (findUser.size() > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public Optional<User> findUserByNameAndPassword(String name, String password) {
+        List<User> findUser = userList.stream().filter(user -> user.getName().equals(name) && user.getPassword().equals(password)).collect(Collectors.toList());
         if (findUser.size() > 0) {
             return Optional.of(findUser.get(0));
         }
