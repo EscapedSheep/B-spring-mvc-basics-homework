@@ -1,9 +1,11 @@
 package com.thoughtworks.capacity.gtb.mvc.exception;
 
 public class ErrorResponse {
+    private int code;
     private String message;
 
-    public ErrorResponse(String message) {
+    public ErrorResponse(int code, String message) {
+        this.code = code;
         this.message = message;
     }
 
@@ -13,5 +15,13 @@ public class ErrorResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
     }
 }
