@@ -1,5 +1,6 @@
 package com.thoughtworks.capacity.gtb.mvc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.Email;
@@ -11,7 +12,6 @@ public class User {
 
     @NotNull(message = "用户名不为空")
     @Size(min = 3, max = 10, message = "用户名不合法")
-    @JsonProperty("username")
     private String name;
 
     @NotNull(message = "密码是不为空")
@@ -36,10 +36,12 @@ public class User {
         this.id = id;
     }
 
+    @JsonProperty("username")
     public String getName() {
         return name;
     }
 
+    @JsonProperty("username")
     public void setName(String name) {
         this.name = name;
     }
