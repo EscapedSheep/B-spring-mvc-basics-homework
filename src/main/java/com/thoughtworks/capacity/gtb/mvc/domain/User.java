@@ -7,6 +7,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class User {
+    private Integer id;
+
     @NotNull(message = "用户名不为空")
     @Size(min = 3, max = 10, message = "用户名不合法")
     @JsonProperty("username")
@@ -20,9 +22,18 @@ public class User {
     private String email;
 
     public User(@NotNull(message = "用户名不为空") @Size(min = 3, max = 10, message = "用户名不合法") String name, @NotNull(message = "密码是不为空") @Size(min = 5, max = 12, message = "密码不合法") String password, @Email(message = "邮箱地址不合法") String email) {
+        this.id = null;
         this.name = name;
         this.password = password;
         this.email = email;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
