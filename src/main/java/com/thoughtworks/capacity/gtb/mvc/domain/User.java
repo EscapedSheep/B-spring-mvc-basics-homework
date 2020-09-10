@@ -21,6 +21,9 @@ public class User {
     @Email(message = "邮箱地址不合法")
     private String email;
 
+    public User() {
+    }
+
     public User(@NotNull(message = "用户名不为空") @Size(min = 3, max = 10, message = "用户名不合法") String name, @NotNull(message = "密码是不为空") @Size(min = 5, max = 12, message = "密码不合法") String password, @Email(message = "邮箱地址不合法") String email) {
         this.id = null;
         this.name = name;

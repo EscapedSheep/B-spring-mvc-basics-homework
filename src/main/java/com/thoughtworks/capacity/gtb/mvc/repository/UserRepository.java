@@ -40,6 +40,10 @@ public class UserRepository {
         return Optional.empty();
     }
 
+    public List<User> getUserList() {
+        return userList;
+    }
+
     private int idGenerator() {
         return idCount.incrementAndGet();
     }
