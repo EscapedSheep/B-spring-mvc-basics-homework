@@ -3,7 +3,6 @@ package com.thoughtworks.capacity.gtb.mvc.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.capacity.gtb.mvc.domain.User;
 import com.thoughtworks.capacity.gtb.mvc.repository.UserRepository;
-import com.thoughtworks.capacity.gtb.mvc.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
