@@ -9,8 +9,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class UserRepository {
-    private List<User> userList = new ArrayList<>();
-    private AtomicInteger idCount = new AtomicInteger(0);
+    private List<User> userList;
+    private AtomicInteger idCount;
+
+    public UserRepository() {
+        this.userList = new ArrayList<>();;
+        this.idCount = new AtomicInteger(0);
+    }
 
     public void addUser(User user) {
         user.setId(idGenerator());
