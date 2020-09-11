@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
+import static com.thoughtworks.capacity.gtb.mvc.exception.ErrorResponse.Message.PASSWORD_INVALID;
+import static com.thoughtworks.capacity.gtb.mvc.exception.ErrorResponse.Message.USER_NAME_INVALID;
+
 @RestController
 @Validated
 public class UserController {
@@ -28,10 +31,10 @@ public class UserController {
 
     @GetMapping("/login")
     public User login(@RequestParam("username")
-                      @Size(min = 3, max = 10, message = "用户名不合法")
+                      @Size(min = 3, max = 10, message = USER_NAME_INVALID)
                                   String name,
                       @RequestParam
-                      @Size(min = 5, max = 12, message = "密码不合法")
+                      @Size(min = 5, max = 12, message = PASSWORD_INVALID)
                               String password) {
         return userService.login(name, password);
     }

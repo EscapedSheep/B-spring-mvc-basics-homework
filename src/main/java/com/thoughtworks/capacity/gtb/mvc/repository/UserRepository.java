@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 @Repository
 public class UserRepository {
@@ -26,19 +25,13 @@ public class UserRepository {
     }
 
     public Boolean isUserNameExisted(String name) {
-        List<User> findUser = userList.stream().filter(user -> user.getName().equals(name)).collect(Collectors.toList());
-        if (findUser.size() > 0) {
-            return true;
-        }
-        return false;
+        return userList.stream().anyMatch(user -> user.getName().equals(name));
+
     }
 
     public Optional<User> findUserByNameAndPassword(String name, String password) {
-        List<User> findUser = userList.stream().filter(user -> user.getName().equals(name) && user.getPassword().equals(password)).collect(Collectors.toList());
-        if (findUser.size() > 0) {
-            return Optional.of(findUser.get(0));
-        }
-        return Optional.empty();
+        return userList.stream().filter(user -> user.getName().equals(name)).filter(user -> user.getPassword().equals(password)).findFirst();
+
     }
 
     public List<User> getUserList() {
